@@ -44,6 +44,15 @@ en priorité pour téléphone.
   petites fonctions extraites). N'ajouter un commentaire qu'en dernier recours,
   pour expliquer un *pourquoi* non déductible du code.
 
+## Conventions de commit
+
+- **Messages de commit en anglais** et au format **Conventional Commits** :
+  `type(scope): description` (ex. `feat(calendar): display January 2026 grid`).
+- Types courants : `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `style`,
+  `ci`, `build`. Le `scope` est optionnel.
+- La description est à l'impératif présent et en minuscules
+  (ex. `add`, pas `added`/`Adds`).
+
 ## Conventions de test
 
 - Récupérer les éléments **par rôle** via `@testing-library/cypress`
