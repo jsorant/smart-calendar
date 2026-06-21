@@ -22,9 +22,9 @@ describe('Calendrier mensuel — janvier 2026', () => {
     )
   })
 
-  it('affiche les jours du mois de janvier', () => {
-    ;['1', '15', '31'].forEach((jour) =>
-      cy.findByRole('cell', { name: jour }).should('exist'),
+  it('affiche tous les jours de janvier (1 à 31)', () => {
+    Array.from({ length: 31 }, (_, i) => i + 1).forEach((jour) =>
+      cy.findByRole('cell', { name: String(jour) }).should('exist'),
     )
   })
 
