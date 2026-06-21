@@ -1,0 +1,91 @@
+/* Mobile first : conçu d'abord pour téléphone (~360–430 px), élargi ensuite. */
+
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: #1f2933;
+  background: #f5f7fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.calendrier {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.calendrier h1 {
+  text-transform: capitalize;
+  font-size: 1.4rem;
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+.calendrier table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.calendrier th,
+.calendrier td {
+  border: 1px solid #d7dde3;
+  text-align: center;
+  /* Cibles tactiles confortables */
+  height: 44px;
+  padding: 4px;
+}
+
+/* En-têtes (jours + colonne « Sem. ») */
+.calendrier thead th {
+  background: #1f2933;
+  color: #fff;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+/* Numéro de semaine (première colonne de chaque ligne) */
+.calendrier tbody th {
+  background: #e4e9f0;
+  color: #52606d;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.calendrier td {
+  background: #fff;
+  font-size: 0.95rem;
+}
+
+/* Jours hors du mois affiché : grisés */
+.calendrier .hors-mois {
+  color: #b0b8c1;
+  background: #fafbfc;
+}
+
+/* Tablette / desktop : on agrandit cellules et police */
+@media (min-width: 768px) {
+  .calendrier {
+    max-width: 640px;
+    padding: 32px;
+  }
+
+  .calendrier h1 {
+    font-size: 1.8rem;
+  }
+
+  .calendrier th,
+  .calendrier td {
+    height: 64px;
+  }
+
+  .calendrier td {
+    font-size: 1.1rem;
+  }
+}
