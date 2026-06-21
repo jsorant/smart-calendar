@@ -27,4 +27,23 @@ describe('Calendrier mensuel — janvier 2026', () => {
       cy.findByRole('cell', { name: jour }).should('exist'),
     )
   })
+
+  it('grise tous les jours hors de janvier (déc. 2025 et fév. 2026)', () => {
+    const couleurJour = (jour) =>
+      cy.findByRole('cell', { name: jour }).invoke('css', 'color')
+    const couleurJourNormal = () => couleurJour('15')
+
+    const horsMois = [
+      '29 décembre 2025',
+      '30 décembre 2025',
+      '31 décembre 2025',
+      '1 février 2026',
+    ]
+    // « Grisé » = couleur différente d'un jour normal du mois.
+    couleurJourNormal().then((normale) => {
+      horsMois.forEach((jour) =>
+        couleurJour(jour).should('not.equal', normale),
+      )
+    })
+  })
 })
