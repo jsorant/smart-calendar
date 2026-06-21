@@ -1,49 +1,44 @@
-describe('Calendrier mensuel — janvier 2026', () => {
+describe('Monthly calendar — January 2026', () => {
   beforeEach(() => {
-    cy.viewport(390, 844) // mobile first
+    cy.viewport(390, 844)
     cy.visit('/')
   })
 
-  it('affiche le titre « janvier 2026 »', () => {
-    cy.findByRole('heading').should('contain.text', 'janvier 2026')
+  it('displays the "January 2026" title', () => {
+    cy.findByRole('heading').should('contain.text', 'January 2026')
   })
 
-  it('affiche les colonnes de jours de L à D', () => {
-    // La première colonne est l'en-tête « Sem. », on la retire avant de
-    // comparer aux initiales des jours réellement affichées.
+  it('displays the day columns Monday to Sunday', () => {
     cy.findAllByRole('columnheader')
       .then(($th) => Cypress._.map($th.slice(1), 'textContent'))
-      .should('deep.equal', ['L', 'M', 'M', 'J', 'V', 'S', 'D'])
+      .should('deep.equal', ['M', 'T', 'W', 'T', 'F', 'S', 'S'])
   })
 
-  it('affiche les numéros de semaine 1 à 5', () => {
+  it('displays week numbers 1 to 5', () => {
     ;[1, 2, 3, 4, 5].forEach((n) =>
       cy.findByRole('rowheader', { name: String(n) }).should('exist'),
     )
   })
 
-  it('affiche tous les jours de janvier (1 à 31)', () => {
-    Array.from({ length: 31 }, (_, i) => i + 1).forEach((jour) =>
-      cy.findByRole('cell', { name: String(jour) }).should('exist'),
+  it('displays every day of January (1 to 31)', () => {
+    Array.from({ length: 31 }, (_, i) => i + 1).forEach((day) =>
+      cy.findByRole('cell', { name: String(day) }).should('exist'),
     )
   })
 
-  it('grise tous les jours hors de janvier (déc. 2025 et fév. 2026)', () => {
-    const couleurJour = (jour) =>
-      cy.findByRole('cell', { name: jour }).invoke('css', 'color')
-    const couleurJourNormal = () => couleurJour('15')
+  it('greys out every day outside January (Dec 2025 and Feb 2026)', () => {
+    const dayColor = (day) =>
+      cy.findByRole('cell', { name: day }).invoke('css', 'color')
+    const normalDayColor = () => dayColor('15')
 
-    const horsMois = [
-      '29 décembre 2025',
-      '30 décembre 2025',
-      '31 décembre 2025',
-      '1 février 2026',
+    const outsideMonth = [
+      'December 29, 2025',
+      'December 30, 2025',
+      'December 31, 2025',
+      'February 1, 2026',
     ]
-    // « Grisé » = couleur différente d'un jour normal du mois.
-    couleurJourNormal().then((normale) => {
-      horsMois.forEach((jour) =>
-        couleurJour(jour).should('not.equal', normale),
-      )
+    normalDayColor().then((normal) => {
+      outsideMonth.forEach((day) => dayColor(day).should('not.equal', normal))
     })
   })
 })

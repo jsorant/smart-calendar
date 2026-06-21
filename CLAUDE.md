@@ -33,6 +33,17 @@ en priorité pour téléphone.
   `cy.viewport('iphone-x')` ou `cy.viewport(390, 844)`) afin de valider le rendu
   téléphone.
 
+## Conventions de code
+
+- **Tout en anglais** : l'application est en anglais. Les identifiants
+  (variables, fonctions, classes CSS, noms de fichiers), les descriptions de
+  tests (`describe`/`it`) **et le contenu affiché à l'utilisateur** (libellés
+  visibles, `aria-label`, textes du calendrier comme « January 2026 » ou les
+  noms de jours) sont en anglais.
+- **Éviter les commentaires** : le code doit être auto-explicatif (noms clairs,
+  petites fonctions extraites). N'ajouter un commentaire qu'en dernier recours,
+  pour expliquer un *pourquoi* non déductible du code.
+
 ## Conventions de test
 
 - Récupérer les éléments **par rôle** via `@testing-library/cypress`
