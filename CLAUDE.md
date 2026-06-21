@@ -20,6 +20,19 @@ Pour développer **toute** nouvelle feature, on suit systématiquement cet ordre
 On n'écrit jamais de code de feature avant d'avoir un test e2e rouge qui le
 justifie.
 
+## Mobile first
+
+L'application est développée **mobile first** : l'affichage doit être optimisé
+en priorité pour téléphone.
+
+- Concevoir et styler d'abord pour les petits écrans (largeur ~360–430 px), puis
+  élargir vers tablette/desktop via des media queries `min-width`.
+- Cibles tactiles confortables, layout en une colonne par défaut, pas de
+  scroll horizontal.
+- Tester les features dans Cypress avec un viewport mobile (ex.
+  `cy.viewport('iphone-x')` ou `cy.viewport(390, 844)`) afin de valider le rendu
+  téléphone.
+
 ## Conventions de test
 
 - Récupérer les éléments **par rôle** via `@testing-library/cypress`
