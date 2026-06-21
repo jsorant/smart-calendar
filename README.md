@@ -23,6 +23,7 @@ npm install
 | `npm run preview` | Sert localement le build de production pour le prévisualiser. |
 | `npm run cy:open` | Ouvre Cypress en mode interactif (le serveur dev doit déjà tourner). |
 | `npm run cy:run` | Lance les tests Cypress en headless (le serveur dev doit déjà tourner). |
+| `npm run dev:tdd` | Démarre le serveur dev **et** ouvre Cypress en mode interactif (idéal pour le TDD e2e). |
 | `npm run test:e2e` | Démarre le serveur dev **et** lance les tests Cypress automatiquement, puis arrête le serveur. |
 
 ### Lancer les tests e2e

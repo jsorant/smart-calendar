@@ -31,6 +31,7 @@ justifie.
 | Commande | Description |
 | --- | --- |
 | `npm run dev` | Serveur de dev Vite sur http://localhost:5173. |
+| `npm run dev:tdd` | Démarre le serveur dev **et** ouvre Cypress en mode interactif (workflow TDD e2e). |
 | `npm run cy:open` | Cypress en mode interactif (serveur dev requis). |
 | `npm run cy:run` | Cypress en headless (serveur dev requis). |
 | `npm run test:e2e` | Démarre le serveur dev **et** lance les tests, puis l'arrête. |
