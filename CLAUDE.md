@@ -37,6 +37,9 @@ en priorité pour téléphone.
 
 - Récupérer les éléments **par rôle** via `@testing-library/cypress`
   (`cy.findByRole(...)`) plutôt que par sélecteurs CSS ou `data-*`.
+- **Éviter les regex** dans les tests : chercher une stratégie plus lisible et
+  moins fragile selon le besoin — chaîne exacte, assertion `contain.text` /
+  `contains`, comparaison de valeurs (`deep.equal`), etc.
 - Les specs vivent dans `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`.
 
 ## Commandes utiles

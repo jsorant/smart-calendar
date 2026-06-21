@@ -5,16 +5,15 @@ describe('Calendrier mensuel — janvier 2026', () => {
   })
 
   it('affiche le titre « janvier 2026 »', () => {
-    cy.findByRole('heading', { name: /janvier 2026/i }).should('exist')
+    cy.findByRole('heading').should('contain.text', 'janvier 2026')
   })
 
-  it('affiche les colonnes de jours lundi à dimanche', () => {
-    ;['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'].forEach(
-      (jour) =>
-        cy
-          .findByRole('columnheader', { name: new RegExp(`^${jour}$`, 'i') })
-          .should('exist'),
-    )
+  it('affiche les colonnes de jours de L à D', () => {
+    // La première colonne est l'en-tête « Sem. », on la retire avant de
+    // comparer aux initiales des jours réellement affichées.
+    cy.findAllByRole('columnheader')
+      .then(($th) => Cypress._.map($th.slice(1), 'textContent'))
+      .should('deep.equal', ['L', 'M', 'M', 'J', 'V', 'S', 'D'])
   })
 
   it('affiche les numéros de semaine 1 à 5', () => {
