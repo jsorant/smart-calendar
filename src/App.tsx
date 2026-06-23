@@ -30,8 +30,15 @@ const DAYS: Day[] = [
 
 const DEFAULT_MONTH: MonthSelection = { year: 2026, month: 1 }
 
+function stripBase(pathname: string): string {
+  const base = import.meta.env.BASE_URL
+  return pathname.startsWith(base)
+    ? pathname.slice(base.length)
+    : pathname.replace(/^\//, '')
+}
+
 function parseMonthFromPath(pathname: string): MonthSelection {
-  const [year, month] = pathname.replace(/^\//, '').split('-')
+  const [year, month] = stripBase(pathname).split('-')
   const parsedYear = Number(year)
   const parsedMonth = Number(month)
   const isValid =
