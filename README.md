@@ -1,6 +1,7 @@
 # Smart Calendar
 
-Application React (Vite) avec des tests end-to-end Cypress utilisant
+Application React (Vite) **en TypeScript** avec des tests end-to-end Cypress
+utilisant
 [`@testing-library/cypress`](https://testing-library.com/docs/cypress-testing-library/intro).
 
 ## En ligne
@@ -15,7 +16,7 @@ est accessible via l'URL `…/smart-calendar/<année>-<mois>` (ex.
 
 ## Prérequis
 
-- Node.js >= 18
+- Node.js >= 20.19
 - npm
 
 ## Installation
@@ -29,7 +30,8 @@ npm install
 | Commande | Description |
 | --- | --- |
 | `npm run dev` | Démarre le serveur de développement Vite sur http://localhost:5173. |
-| `npm run build` | Génère le build de production dans `dist/`. |
+| `npm run typecheck` | Vérifie le typage TypeScript (`tsc --build`). |
+| `npm run build` | Vérifie le typage puis génère le build de production dans `dist/`. |
 | `npm run preview` | Sert localement le build de production pour le prévisualiser. |
 | `npm run cy:open` | Ouvre Cypress en mode interactif (le serveur dev doit déjà tourner). |
 | `npm run cy:run` | Lance les tests Cypress en headless (le serveur dev doit déjà tourner). |
@@ -62,22 +64,29 @@ npm run cy:open   # ou npm run cy:run
 
 ```
 ├── index.html
-├── vite.config.js
+├── vite.config.ts
 ├── package.json
+├── tsconfig.json         # Références vers les tsconfig app / node / cypress
+├── tsconfig.app.json     # Config TS pour le code de l'application (src/)
+├── tsconfig.node.json    # Config TS pour vite.config.ts
+├── tsconfig.cypress.json # Config TS pour les tests Cypress
 ├── src/
-│   ├── main.jsx          # Point d'entrée React
-│   └── App.jsx           # Page « Hello World »
-├── cypress.config.js
+│   ├── main.tsx          # Point d'entrée React
+│   ├── App.tsx           # Calendrier mensuel
+│   ├── index.css         # Styles
+│   └── vite-env.d.ts     # Types Vite (import.meta.env, imports CSS…)
+├── cypress.config.ts
 └── cypress/
-    ├── support/e2e.js    # Import des commandes @testing-library/cypress
-    └── e2e/hello.cy.js   # Test e2e
+    ├── support/e2e.ts    # Import des commandes @testing-library/cypress
+    └── e2e/calendar.cy.ts # Tests e2e du calendrier
 ```
 
 ## À propos des tests
 
-Le test (`cypress/e2e/hello.cy.js`) récupère les éléments **par rôle** via les
-commandes de `@testing-library/cypress` :
+Les tests (`cypress/e2e/calendar.cy.ts`) récupèrent les éléments **par rôle** via
+les commandes de `@testing-library/cypress`, en privilégiant des assertions
+lisibles plutôt que des regex :
 
-```js
-cy.findByRole('heading', { name: /hello world/i }).should('exist')
+```ts
+cy.findByRole('heading').should('contain.text', 'January 2026')
 ```
