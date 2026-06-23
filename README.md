@@ -50,14 +50,11 @@ Cette commande utilise [`start-server-and-test`](https://github.com/bahmutov/sta
 pour démarrer le serveur dev, attendre que http://localhost:5173 réponde, exécuter
 `cy:run`, puis couper le serveur.
 
-Alternative en deux temps (utile pour le mode interactif) :
+Pour développer en TDD e2e, un script dédié démarre le serveur dev **et** ouvre
+Cypress en mode interactif :
 
 ```bash
-# Terminal 1
-npm run dev
-
-# Terminal 2
-npm run cy:open   # ou npm run cy:run
+npm run dev:tdd
 ```
 
 ## Structure du projet
