@@ -1,4 +1,24 @@
-const DAYS = [
+type Day = {
+  initial: string
+  name: string
+}
+
+type MonthSelection = {
+  year: number
+  month: number
+}
+
+type CalendarDay = {
+  n: number
+  outside?: string
+}
+
+type Week = {
+  number: number
+  days: CalendarDay[]
+}
+
+const DAYS: Day[] = [
   { initial: 'M', name: 'Monday' },
   { initial: 'T', name: 'Tuesday' },
   { initial: 'W', name: 'Wednesday' },
@@ -8,9 +28,9 @@ const DAYS = [
   { initial: 'S', name: 'Sunday' },
 ]
 
-const DEFAULT_MONTH = { year: 2026, month: 1 }
+const DEFAULT_MONTH: MonthSelection = { year: 2026, month: 1 }
 
-function parseMonthFromPath(pathname) {
+function parseMonthFromPath(pathname: string): MonthSelection {
   const [year, month] = pathname.replace(/^\//, '').split('-')
   const parsedYear = Number(year)
   const parsedMonth = Number(month)
@@ -22,27 +42,27 @@ function parseMonthFromPath(pathname) {
   return isValid ? { year: parsedYear, month: parsedMonth } : DEFAULT_MONTH
 }
 
-function mondayIndex(date) {
+function mondayIndex(date: Date): number {
   return (date.getDay() + 6) % 7
 }
 
-function monthTitle(year, month) {
+function monthTitle(year: number, month: number): string {
   return new Date(year, month - 1, 1).toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric',
   })
 }
 
-function buildWeeks(year, month) {
+function buildWeeks(year: number, month: number): Week[] {
   const firstOfMonth = new Date(year, month - 1, 1)
   const start = new Date(year, month - 1, 1 - mondayIndex(firstOfMonth))
   const lastOfMonth = new Date(year, month, 0)
 
-  const weeks = []
+  const weeks: Week[] = []
   const cursor = start
   let number = 1
   while (cursor <= lastOfMonth) {
-    const days = []
+    const days: CalendarDay[] = []
     for (let i = 0; i < 7; i += 1) {
       const inMonth = cursor.getMonth() === month - 1
       days.push({

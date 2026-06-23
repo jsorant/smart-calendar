@@ -1,7 +1,7 @@
 # Smart Calendar
 
-Application React (Vite) testée de bout en bout avec Cypress et
-`@testing-library/cypress`.
+Application React (Vite) **en TypeScript**, testée de bout en bout avec Cypress
+et `@testing-library/cypress`.
 
 ## Workflow de développement — TDD e2e d'abord
 
@@ -35,6 +35,11 @@ en priorité pour téléphone.
 
 ## Conventions de code
 
+- **TypeScript uniquement** : tout le code (app, tests Cypress, configs Vite et
+  Cypress) est écrit en TypeScript (`.ts` / `.tsx`). Ne jamais créer de nouveau
+  fichier `.js` / `.jsx`. Typer explicitement les signatures de fonctions et les
+  structures de données ; le code doit passer `npm run typecheck` (mode
+  `strict`).
 - **Tout en anglais** : l'application est en anglais. Les identifiants
   (variables, fonctions, classes CSS, noms de fichiers), les descriptions de
   tests (`describe`/`it`) **et le contenu affiché à l'utilisateur** (libellés
@@ -67,6 +72,7 @@ en priorité pour téléphone.
 | Commande | Description |
 | --- | --- |
 | `npm run dev` | Serveur de dev Vite sur http://localhost:5173. |
+| `npm run typecheck` | Vérifie le typage TypeScript (`tsc --build`). |
 | `npm run dev:tdd` | Démarre le serveur dev **et** ouvre Cypress en mode interactif (workflow TDD e2e). |
 | `npm run cy:open` | Cypress en mode interactif (serveur dev requis). |
 | `npm run cy:run` | Cypress en headless (serveur dev requis). |

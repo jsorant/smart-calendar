@@ -1,14 +1,15 @@
-const readCalendar = ($rows) => {
-  const columns = $rows[0].cells.length
+const readCalendar = ($rows: JQuery<HTMLElement>): string => {
+  const rows = Cypress._.map($rows, (row) => row as HTMLTableRowElement)
+  const columns = rows[0].cells.length
   const border = '+' + Cypress._.fill(Array(columns), '----').join('+') + '+'
-  const toLine = (row) =>
+  const toLine = (row: HTMLTableRowElement): string =>
     '|' +
     Cypress._.map(
       row.cells,
-      (cell) => ' ' + cell.textContent.trim().padStart(2) + ' ',
+      (cell) => ' ' + (cell.textContent ?? '').trim().padStart(2) + ' ',
     ).join('|') +
     '|'
-  const [header, ...body] = Cypress._.map($rows, toLine)
+  const [header, ...body] = Cypress._.map(rows, toLine)
   return [border, header, border, ...body, border].join('\n')
 }
 
@@ -39,7 +40,7 @@ describe('Monthly calendar — January 2026', () => {
   })
 
   it('greys out every day outside January (Dec 2025 and Feb 2026)', () => {
-    const dayColor = (day) =>
+    const dayColor = (day: string) =>
       cy.findByRole('cell', { name: day }).invoke('css', 'color')
     const normalDayColor = () => dayColor('15')
 
@@ -83,7 +84,7 @@ describe('Monthly calendar — March 2026', () => {
   })
 
   it('greys out every day outside March (Feb 2026 and Apr 2026)', () => {
-    const dayColor = (day) =>
+    const dayColor = (day: string) =>
       cy.findByRole('cell', { name: day }).invoke('css', 'color')
     const normalDayColor = () => dayColor('15')
 
@@ -105,4 +106,3 @@ describe('Monthly calendar — March 2026', () => {
     })
   })
 })
-
