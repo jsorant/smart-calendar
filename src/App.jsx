@@ -8,40 +8,68 @@ const DAYS = [
   { initial: 'S', name: 'Sunday' },
 ]
 
-const WEEKS = [
-  {
-    number: 1,
-    days: [
-      { n: 29, outside: 'December 29, 2025' },
-      { n: 30, outside: 'December 30, 2025' },
-      { n: 31, outside: 'December 31, 2025' },
-      { n: 1 },
-      { n: 2 },
-      { n: 3 },
-      { n: 4 },
-    ],
-  },
-  { number: 2, days: [5, 6, 7, 8, 9, 10, 11].map((n) => ({ n })) },
-  { number: 3, days: [12, 13, 14, 15, 16, 17, 18].map((n) => ({ n })) },
-  { number: 4, days: [19, 20, 21, 22, 23, 24, 25].map((n) => ({ n })) },
-  {
-    number: 5,
-    days: [
-      { n: 26 },
-      { n: 27 },
-      { n: 28 },
-      { n: 29 },
-      { n: 30 },
-      { n: 31 },
-      { n: 1, outside: 'February 1, 2026' },
-    ],
-  },
-]
+const DEFAULT_MONTH = { year: 2026, month: 1 }
+
+function parseMonthFromPath(pathname) {
+  const [year, month] = pathname.replace(/^\//, '').split('-')
+  const parsedYear = Number(year)
+  const parsedMonth = Number(month)
+  const isValid =
+    Number.isInteger(parsedYear) &&
+    Number.isInteger(parsedMonth) &&
+    parsedMonth >= 1 &&
+    parsedMonth <= 12
+  return isValid ? { year: parsedYear, month: parsedMonth } : DEFAULT_MONTH
+}
+
+function mondayIndex(date) {
+  return (date.getDay() + 6) % 7
+}
+
+function monthTitle(year, month) {
+  return new Date(year, month - 1, 1).toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+function buildWeeks(year, month) {
+  const firstOfMonth = new Date(year, month - 1, 1)
+  const start = new Date(year, month - 1, 1 - mondayIndex(firstOfMonth))
+  const lastOfMonth = new Date(year, month, 0)
+
+  const weeks = []
+  const cursor = start
+  let number = 1
+  while (cursor <= lastOfMonth) {
+    const days = []
+    for (let i = 0; i < 7; i += 1) {
+      const inMonth = cursor.getMonth() === month - 1
+      days.push({
+        n: cursor.getDate(),
+        outside: inMonth
+          ? undefined
+          : cursor.toLocaleDateString('en-US', {
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric',
+            }),
+      })
+      cursor.setDate(cursor.getDate() + 1)
+    }
+    weeks.push({ number, days })
+    number += 1
+  }
+  return weeks
+}
 
 export default function App() {
+  const { year, month } = parseMonthFromPath(window.location.pathname)
+  const weeks = buildWeeks(year, month)
+
   return (
     <main className="calendar">
-      <h1>January 2026</h1>
+      <h1>{monthTitle(year, month)}</h1>
       <table>
         <thead>
           <tr>
@@ -56,7 +84,7 @@ export default function App() {
           </tr>
         </thead>
         <tbody>
-          {WEEKS.map((week) => (
+          {weeks.map((week) => (
             <tr key={week.number}>
               <th scope="row">{week.number}</th>
               {week.days.map((day, i) =>
