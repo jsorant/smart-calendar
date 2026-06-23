@@ -3,6 +3,16 @@
 Application React (Vite) avec des tests end-to-end Cypress utilisant
 [`@testing-library/cypress`](https://testing-library.com/docs/cypress-testing-library/intro).
 
+## En ligne
+
+L'application est déployée sur GitHub Pages :
+**https://jsorant.github.io/smart-calendar/**
+
+Chaque push sur `main` redéploie automatiquement le site via le workflow
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Un mois précis
+est accessible via l'URL `…/smart-calendar/<année>-<mois>` (ex.
+[`…/smart-calendar/2026-03`](https://jsorant.github.io/smart-calendar/2026-03)).
+
 ## Prérequis
 
 - Node.js >= 18
