@@ -15,7 +15,7 @@ const readCalendar = ($rows) => {
 describe('Monthly calendar — January 2026', () => {
   beforeEach(() => {
     cy.viewport(390, 844)
-    cy.visit('/')
+    cy.visit('/2026-01')
   })
 
   it('displays the "January 2026" title', () => {
@@ -23,8 +23,6 @@ describe('Monthly calendar — January 2026', () => {
   })
 
   it('renders the full January 2026 calendar at /2026-01', () => {
-    cy.visit('/2026-01')
-
     const expectedCalendar = [
       '+----+----+----+----+----+----+----+----+',
       '| Wk |  M |  T |  W |  T |  F |  S |  S |',
