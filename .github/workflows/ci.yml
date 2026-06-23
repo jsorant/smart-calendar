@@ -6,8 +6,13 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  cypress-e2e:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,3 +37,32 @@ jobs:
           start: npm run dev
           wait-on: http://localhost:5173
           wait-on-timeout: 120
+
+      - name: Add SPA fallback
+        if: github.event_name == 'push'
+        run: cp dist/index.html dist/404.html
+
+      - name: Setup Pages
+        if: github.event_name == 'push'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
