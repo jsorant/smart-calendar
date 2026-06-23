@@ -19,10 +19,16 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          install-command: npm ci
+          install: false
           start: npm run dev
           wait-on: http://localhost:5173
           wait-on-timeout: 120
