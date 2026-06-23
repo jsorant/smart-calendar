@@ -83,5 +83,28 @@ describe('Monthly calendar — March 2026', () => {
 
     cy.findAllByRole('row').then(readCalendar).should('contain', expectedCalendar)
   })
+
+  it('greys out every day outside March (Feb 2026 and Apr 2026)', () => {
+    const dayColor = (day) =>
+      cy.findByRole('cell', { name: day }).invoke('css', 'color')
+    const normalDayColor = () => dayColor('15')
+
+    const outsideMonth = [
+      'February 23, 2026',
+      'February 24, 2026',
+      'February 25, 2026',
+      'February 26, 2026',
+      'February 27, 2026',
+      'February 28, 2026',
+      'April 1, 2026',
+      'April 2, 2026',
+      'April 3, 2026',
+      'April 4, 2026',
+      'April 5, 2026',
+    ]
+    normalDayColor().then((normal) => {
+      outsideMonth.forEach((day) => dayColor(day).should('not.equal', normal))
+    })
+  })
 })
 
