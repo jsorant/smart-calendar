@@ -13,9 +13,9 @@ function removeLeadingSlash(pathname: string): string {
 }
 
 function removeBase(pathname: string): string {
-    const base = import.meta.env.BASE_URL
-    if (pathname.startsWith(base)) {
-        return pathname.slice(base.length)
+    const baseUrl = import.meta.env.BASE_URL
+    if (pathname.startsWith(baseUrl)) {
+        return pathname.slice(baseUrl.length)
     }
     return removeLeadingSlash(pathname)
 }
