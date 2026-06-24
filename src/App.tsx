@@ -8,15 +8,20 @@ type MonthSelection = {
 
 const DEFAULT_MONTH: MonthSelection = {year: 2026, month: 1}
 
-function stripBase(pathname: string): string {
+function removeLeadingSlash(pathname: string): string {
+    return pathname.startsWith('/') ? pathname.slice(1) : pathname
+}
+
+function removeBase(pathname: string): string {
     const base = import.meta.env.BASE_URL
-    return pathname.startsWith(base)
-        ? pathname.slice(base.length)
-        : pathname.replace(/^\//, '')
+    if (pathname.startsWith(base)) {
+        return pathname.slice(base.length)
+    }
+    return removeLeadingSlash(pathname)
 }
 
 function parseMonthFromPath(pathname: string): MonthSelection {
-    const [year, month] = stripBase(pathname).split('-')
+    const [year, month] = removeBase(pathname).split('-')
     const parsedYear = Number(year)
     const parsedMonth = Number(month)
     const isValid =
@@ -32,8 +37,8 @@ export default function App() {
 
     return (
         <main className="calendar">
-            <PageTitle year={year} month={month} />
-            <Calendar year={year} month={month} />
+            <PageTitle year={year} month={month}/>
+            <Calendar year={year} month={month}/>
         </main>
     )
 }
