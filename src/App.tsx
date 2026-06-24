@@ -1,3 +1,5 @@
+import PageTitle from './PageTitle'
+
 type Day = {
     initial: string
     name: string
@@ -59,13 +61,6 @@ function isoWeekNumber(date: Date): number {
     const yearStart = new Date(thursday.getFullYear(), 0, 1)
     const thursdayIndex = Math.round((thursday.getTime() - yearStart.getTime()) / 86400000)
     return Math.ceil((thursdayIndex + 1) / 7)
-}
-
-function monthTitle(year: number, month: number): string {
-    return new Date(year, month - 1, 1).toLocaleDateString('en-US', {
-        month: 'long',
-        year: 'numeric',
-    })
 }
 
 function mondayOf(year: number, month: number, firstDayOfMonth: Date): Date {
@@ -138,7 +133,7 @@ export default function App() {
 
     return (
         <main className="calendar">
-            <h1>{monthTitle(year, month)}</h1>
+            <PageTitle year={year} month={month} />
             <table>
                 <thead>
                 <tr>
