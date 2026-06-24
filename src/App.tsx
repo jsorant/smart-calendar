@@ -53,6 +53,15 @@ function mondayIndex(date: Date): number {
   return (date.getDay() + 6) % 7
 }
 
+function isoWeekNumber(date: Date): number {
+  const thursday = new Date(date)
+  thursday.setDate(thursday.getDate() - mondayIndex(date) + 3)
+  const firstThursday = new Date(thursday.getFullYear(), 0, 4)
+  firstThursday.setDate(firstThursday.getDate() - mondayIndex(firstThursday) + 3)
+  const msPerWeek = 7 * 24 * 60 * 60 * 1000
+  return 1 + Math.round((thursday.getTime() - firstThursday.getTime()) / msPerWeek)
+}
+
 function monthTitle(year: number, month: number): string {
   return new Date(year, month - 1, 1).toLocaleDateString('en-US', {
     month: 'long',
@@ -67,8 +76,8 @@ function buildWeeks(year: number, month: number): Week[] {
 
   const weeks: Week[] = []
   const cursor = start
-  let number = 1
   while (cursor <= lastOfMonth) {
+    const number = isoWeekNumber(cursor)
     const days: CalendarDay[] = []
     for (let i = 0; i < 7; i += 1) {
       const inMonth = cursor.getMonth() === month - 1
@@ -85,7 +94,6 @@ function buildWeeks(year: number, month: number): Week[] {
       cursor.setDate(cursor.getDate() + 1)
     }
     weeks.push({ number, days })
-    number += 1
   }
   return weeks
 }
