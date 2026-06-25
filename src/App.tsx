@@ -1,5 +1,5 @@
 import Calendar from './Calendar'
-import PageTitle from './PageTitle'
+import Title from './Title'
 
 type MonthSelection = {
     year: number
@@ -37,7 +37,7 @@ export default function App() {
 
     return (
         <main className="calendar">
-            <PageTitle year={year} month={month}/>
+            <Title year={year} month={month}/>
             <Calendar year={year} month={month}/>
         </main>
     )

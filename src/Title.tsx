@@ -5,11 +5,11 @@ function monthTitle(year: number, month: number): string {
     })
 }
 
-type PageTitleProps = {
+type TitleProps = {
     year: number
     month: number
 }
 
-export default function PageTitle({year, month}: PageTitleProps) {
+export default function Title({year, month}: TitleProps) {
     return <h1>{monthTitle(year, month)}</h1>
 }
